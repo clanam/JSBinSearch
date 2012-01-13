@@ -111,7 +111,7 @@ BS.prototype.step = function() {
  *  @return {Boolean}
  */
 BS.prototype.isSearchOver = function() {
-    return this.min > this.max;
+    return this.min >= this.max;
 };
 
 /**
