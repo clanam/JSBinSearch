@@ -1,0 +1,53 @@
+body {
+    padding: 10px;
+    background: #000;
+    font-family: "Courier New";
+    color: #006;
+}
+
+h1 {
+    margin: 0;
+    margin-bottom: 20px;
+    box-shadow: 10px 10px 0px 0px #CCE;
+}
+
+h1, div {
+    display: inline-block;
+    float: left;
+    padding: 20px;
+    background: #FFF;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+#bs-list {
+    clear: both;
+    margin-left: 50px;
+    box-shadow: -10px 10px 0px 0px #CCE;
+}
+
+#bs-form {
+    margin-left: 10px;
+    margin-top: 10px;
+    box-shadow: 10px -10px 0px 0px #CCE;
+}
+
+#bs-list p {
+    margin: 0;
+    padding: 1px;
+}
+
+#bs-list p.searching {
+    background: #CCC;
+}
+
+#bs-step {
+    background: #DDD;
+    padding: 3px 8px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+#bs-step:hover {
+    background: #CCC;
+}
