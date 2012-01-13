@@ -3,10 +3,48 @@
 
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <link rel="stylesheet" href="css/panda.css" type="text/css">
     <title>Binary Search Demo</title>
 </head>
 
 <body>
+
+<h1>Binary Search Demo</h1>
+
+<div id="bs-list"></div>
+
+<div id="bs-form">
+
+</div>
+
+<script type="text/javascript" src="js/binSearch.js"></script>
+
+<script type ="text/javascript">
+
+var bin = new BS();
+var nameNodes = [];
+var box = document.getElementById('bs-list');
+var searchClass = 'searching';
+
+var loadList = function() {
+    var i, node, numString;
+
+    for (i = 0; i < BS.sortedList.length; i++) {
+        node = document.createElement('p');
+        numString = i < 9? '0' + (String)(i+1) : (String)(i+1);
+        node.innerHTML = ['#', numString, ') ', BS.sortedList[i]].join('');
+        node.className = searchClass;
+        nameNodes.push(node);
+    }
+
+    for (i = 0; i < BS.sortedList.length; i++) {
+        box.appendChild(nameNodes[i]);
+    }
+};
+
+loadList();
+
+</script>
 
 </body>
 </html>
