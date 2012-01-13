@@ -25,30 +25,52 @@
 
 <script type ="text/javascript">
 
-// move all this to another file later ^^;
+    // move all this to another file later ^^;
 
-var bin = new BS();
-var nameNodes = [];
-var box = document.getElementById('bs-list');
-var searchClass = 'searching';
+    var bin = new BS(),
+        nameNodes = [],
+        listBox = document.getElementById('bs-list'),
+        searchBox = document.getElementById('bs-needle'),
+        searchButton = document.getElementById('bs-step'),
+        searchClass = 'searching',
+        searchInProgress = false,
+        searchTerm;
 
-var loadList = function() {
-    var i, node, numString;
+    var loadList = function() {
+        var i, node, numString;
 
-    for (i = 0; i < BS.sortedList.length; i++) {
-        node = document.createElement('p');
-        numString = i < 9? '0' + (String)(i+1) : (String)(i+1);
-        node.innerHTML = ['#', numString, ') ', BS.sortedList[i]].join('');
-        node.className = searchClass;
-        nameNodes.push(node);
-    }
+        for (i = 0; i < BS.sortedList.length; i++) {
+            node = document.createElement('p');
+            numString = i < 9? '0' + (String)(i+1) : (String)(i+1);
+            node.innerHTML = ['#', numString, ') ', BS.sortedList[i]].join('');
+            node.className = searchClass;
+            nameNodes.push(node);
+        }
 
-    for (i = 0; i < BS.sortedList.length; i++) {
-        box.appendChild(nameNodes[i]);
-    }
-};
+        for (i = 0; i < BS.sortedList.length; i++) {
+            listBox.appendChild(nameNodes[i]);
+        }
+    };
 
-loadList();
+    var step = function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (!searchInProgress) {
+            searchTerm = searchBox.value;
+            if (!searchTerm) {
+                return;
+            }
+
+            
+        }
+
+        return false;
+    };
+
+    searchButton.onclick = step;
+
+    loadList();
 
 </script>
 
