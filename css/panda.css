@@ -42,13 +42,19 @@ h1, div {
     background: #CCC;
 }
 
-#bs-step {
+#bs-list p.needle {
+    background: #CCC;
+    border: 1px solid black;
+    padding: 0 1px;
+}
+
+#bs-form button {
     background: #DDD;
     padding: 3px 8px;
     border: 1px solid black;
     border-radius: 5px;
 }
 
-#bs-step:hover {
+#bs-form button:hover {
     background: #CCC;
 }

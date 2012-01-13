@@ -113,3 +113,13 @@ BS.prototype.step = function() {
 BS.prototype.isSearchOver = function() {
     return this.min > this.max;
 };
+
+/**
+ *  Returns a random name, just because I like random number generators.
+ *  @method random
+ *  @return {String}
+ */
+BS.prototype.random = function() {
+    var rand = Math.floor(Math.random()*BS.sortedList.length);
+    return BS.sortedList[rand];
+};

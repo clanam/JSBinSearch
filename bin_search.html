@@ -18,6 +18,8 @@
         <label for="bs-needle">Name To Search For: </label>
         <input type="text" id="bs-needle" />
         <button id="bs-step">Step!</button>
+        <button id="bs-clear">Clear</button>
+        <button id="bs-rand">Random</button>
     </form>
 </div>
 
@@ -32,18 +34,19 @@
         listBox = document.getElementById('bs-list'),
         searchBox = document.getElementById('bs-needle'),
         searchButton = document.getElementById('bs-step'),
+        clearButton = document.getElementById('bs-clear'),
+        randomButton = document.getElementById('bs-rand'),
         searchClass = 'searching',
         searchInProgress = false,
         searchTerm;
 
     var loadList = function() {
-        var i, node, numString, rand;
+        var i, node, numString;
 
         for (i = 0; i < BS.sortedList.length; i++) {
             node = document.createElement('p');
             numString = i < 9? '0' + (String)(i+1) : (String)(i+1);
-            node.innerHTML = ['#', numString, ') ', BS.sortedList[i]].join('');
-            node.className = searchClass;
+            node.innerHTML = ['#', numString, ') ', BS.sortedList[i]].join(''); 
             nameNodes.push(node);
         }
 
@@ -51,8 +54,7 @@
             listBox.appendChild(nameNodes[i]);
         }
 
-        rand = Math.floor(Math.random()*BS.sortedList.length);
-        searchBox.value = BS.sortedList[rand];
+        searchBox.value = bin.random();
     };
 
     var updateNameNodes = function() {
@@ -67,7 +69,46 @@
         }
     };
 
+    var startSearch = function(searchTerm) {
+        searchInProgress = true;
+        searchBox.disabled = 'disabled';
+        bin.initialize(searchTerm);
+        updateNameNodes();
+    };
+
+    var endSearch = function() {
+        searchInProgress = false;
+        searchBox.value = '';
+        searchBox.disabled = '';
+ 
+        for (i = 0; i < nameNodes.length; i++) {
+            nameNodes[i].className = '';
+        }
+    };
+
+    var clear = function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        endSearch();
+
+        bin.initialize();
+        updateNameNodes();
+    };
+
+    var random = function(e) {
+        var randName = bin.random();
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        searchBox.value = randName;
+        startSearch(randName);
+    };
+
     var step = function(e) {
+        var needleFound;
+
         e.preventDefault();
         e.stopPropagation();
 
@@ -77,15 +118,24 @@
                 return;
             }
 
-            bin.initialize(searchTerm);
-            searchInProgress = true;
+            startSearch(searchTerm);
+            return;
         }
 
-        bin.step();
+        needleFound = bin.step();
         updateNameNodes();
+
+        if (needleFound) {
+            endSearch();
+            nameNodes[bin.mid].className = 'needle';
+        } else if (bin.isSearchOver()) {
+            endSearch();
+        }
     };
 
     searchButton.onclick = step;
+    clearButton.onclick = clear;
+    randomButton.onclick = random;
 
     loadList();
 
