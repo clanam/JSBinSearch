@@ -35,6 +35,7 @@ h1, div {
 #bs-list p {
     margin: 0;
     padding: 1px;
+    font-size: 77%
 }
 
 #bs-list p.searching {

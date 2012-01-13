@@ -37,7 +37,7 @@
         searchTerm;
 
     var loadList = function() {
-        var i, node, numString;
+        var i, node, numString, rand;
 
         for (i = 0; i < BS.sortedList.length; i++) {
             node = document.createElement('p');
@@ -49,6 +49,21 @@
 
         for (i = 0; i < BS.sortedList.length; i++) {
             listBox.appendChild(nameNodes[i]);
+        }
+
+        rand = Math.floor(Math.random()*BS.sortedList.length);
+        searchBox.value = BS.sortedList[rand];
+    };
+
+    var updateNameNodes = function() {
+        var i;
+
+        for (i = 0; i < nameNodes.length; i++) {
+            if (bin.min <= i && i <= bin.max) {
+                nameNodes[i].className = searchClass;
+            } else {
+                nameNodes[i].className = '';
+            }
         }
     };
 
@@ -62,10 +77,12 @@
                 return;
             }
 
-            
+            bin.initialize(searchTerm);
+            searchInProgress = true;
         }
 
-        return false;
+        bin.step();
+        updateNameNodes();
     };
 
     searchButton.onclick = step;

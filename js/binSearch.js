@@ -49,6 +49,7 @@ BS.sortedList = [
 BS.prototype.min = 0;
 BS.prototype.max = BS.sortedList.length;
 BS.prototype.mid = 0;
+BS.prototype.needle = '';
 
 /**
  *  Finds the given needle in the BS.sortedList haystack.
@@ -58,25 +59,57 @@ BS.prototype.mid = 0;
  *  @return {Number} index of needle in haystack, or -1 if not found
  */
 BS.prototype.find = function(needle) {
-    var list = BS.sortedList;
-
     if (typeof(needle) !== 'string') {
         return -1;
     }
 
-    this.min = 0;
-    this.max = list.length - 1;
-    this.mid = Math.floor((this.min + this.max)/2);
+    this.initialize(needle);
 
-    while (this.min < this.max) {
-        if (needle === list[this.mid]) {
-            return this.mid;
-        } else if (needle < list[this.mid]) {
-            this.max = this.mid - 1;
-        } else {
-            this.min = this.mid + 1;
-        }
+    while (!this.isSearchOver()) {
+        this.step();
     }
 
     return -1;
+};
+
+/**
+ *  Reset the search status.
+ *  @method initialize
+ *  @param {String} needle item being searched for
+ */
+BS.prototype.initialize = function(needle) {
+    this.min = 0;
+    this.max = BS.sortedList.length - 1;
+    this.needle = needle;
+};
+
+/**
+ *  Perform one step in the search.
+ *  @method step
+ *  @return {Boolean} if this.mid is the index of needle
+ */
+BS.prototype.step = function() {
+    var list = BS.sortedList;
+
+    this.mid = Math.floor((this.min + this.max)/2);
+
+    if (this.needle === list[this.mid]) {
+        this.min = this.max = this.mid;
+        return true;
+    } else if (this.needle < list[this.mid]) {
+        this.max = this.mid - 1;
+    } else {
+        this.min = this.mid + 1;
+    }
+
+    return false;
+};
+
+/**
+ *  Returns true if needle cannot be in haystack.
+ *  @method isSearchOver
+ *  @return {Boolean}
+ */
+BS.prototype.isSearchOver = function() {
+    return this.min > this.max;
 };
